@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 { 
-    [SerializeField] protected int ammount;
+    [SerializeField] [Range(0, 100)] protected int ammountPercent = 100;
     [SerializeField] protected Sound collectSound;
     [SerializeField] protected string _interactText;
     public virtual string InteractText => string.IsNullOrWhiteSpace(_interactText) | string.IsNullOrEmpty(_interactText) ? null : _interactText;
@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
 
     public virtual void CollectItem(GameObject obj)
     {
-
+        Debug.Log("Collectiing item: " + gameObject.name);
     }
 
     public virtual void InteractingWithItem()

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Linq;
+using UnityEngine.UI;
+using System;
 
 public class TorchLight : MonoBehaviour
 {
@@ -11,6 +13,16 @@ public class TorchLight : MonoBehaviour
     protected bool isLit = true;
     public bool IsLit => isLit;
     protected List<Tween> tweens = new List<Tween>();
+    
+    [SerializeField] protected float torchMaxBattery = 60f;
+    public float TorchMaxBattery => torchMaxBattery;
+    protected float torchBattery = 60f;
+    public float TorchBattery 
+    {
+        get => torchBattery;
+        set => torchBattery = Math.Clamp(value, 0, torchMaxBattery);
+    }
+    [SerializeField] protected Image torchFill;
     [SerializeField] protected float tweenDurantion = 0.25f;
     [SerializeField] protected Ease tweenEase = Ease.OutSine;
     [SerializeField] protected MeshRenderer[] emissionMeshs;
@@ -19,6 +31,7 @@ public class TorchLight : MonoBehaviour
 
     private void Start()
     {
+        torchBattery = torchMaxBattery;
         foreach (var mesh in emissionMeshs)
         {
             var mats = mesh.materials;
@@ -31,10 +44,32 @@ public class TorchLight : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButtonDown("Torch"))
+        if(isLit) torchBattery -= Time.deltaTime;
+        torchFill.fillAmount = torchBattery / torchMaxBattery;
+
+        if(torchBattery <=0 & isLit)
         {
-            foreach (var t in tweens) t.Kill();
+            isLit = false;
+            SetLit();
+        }
+
+        if(Input.GetButtonDown("Torch") & torchBattery > 0)
+        {
             isLit = !isLit;
+            SetLit();
+        }
+    }
+
+    protected void DisablingEmission(Material mat)
+    {
+        if (isLit) return;
+        mat.DisableKeyword("_EMISSION");
+        mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
+    }
+
+    protected void SetLit()
+    {
+        foreach (var t in tweens) t.Kill();
             for (int i = 0; i < lightsSources.Length; i++)
             {
                 var intensity = isLit ? lightsIntensities[i] : 0f;
@@ -53,15 +88,7 @@ public class TorchLight : MonoBehaviour
                 }
 
                 tweens.Add(curMat.DOColor(intensity, "_EmissionColor", tweenDurantion).SetEase(Ease.OutSine)
-                .OnComplete(() => SetLit(curMat)));
+                .OnComplete(() => DisablingEmission(curMat)));
             }
-        }
-    }
-
-    protected void SetLit(Material mat)
-    {
-        if (isLit) return;
-        mat.DisableKeyword("_EMISSION");
-        mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
     }
 }
