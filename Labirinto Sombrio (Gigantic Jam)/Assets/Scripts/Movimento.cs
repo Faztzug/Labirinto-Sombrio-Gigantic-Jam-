@@ -199,7 +199,6 @@ public class Movimento : MonoBehaviour
         }
         else if((currentSpeed > walkSpeed & !isRuning))
         {
-            Debug.Log("stoping run");
             var decreaseValue = 0f;
             if (lastInputSpeed > walkSpeed) decreaseValue = inerciaDeccalaration * 1f * Time.deltaTime;
             else decreaseValue = inerciaDeccalaration * 2.5f * Time.deltaTime;
