@@ -191,7 +191,7 @@ public class Movimento : MonoBehaviour
             var decreaseValue = 0f;
             if(lastInputSpeed > walkSpeed) decreaseValue = inerciaDeccalaration * 1f * Time.deltaTime;
             else if(lastInputSpeed > crouchingSpeed & lastInputSpeed < runSpeed) decreaseValue = inerciaDeccalaration * 2.5f * Time.deltaTime;
-            else if(lastInputSpeed < crouchingSpeed) decreaseValue = inerciaDeccalaration * 5f * Time.deltaTime;
+            else if(lastInputSpeed <= crouchingSpeed) decreaseValue = inerciaDeccalaration * 5f * Time.deltaTime;
 
             currentSpeed -= decreaseValue;
             var flag = isCrouching & hasMovingInput & currentSpeed > crouchingSpeed - 0.2f && currentSpeed < crouchingSpeed + 0.2f;
