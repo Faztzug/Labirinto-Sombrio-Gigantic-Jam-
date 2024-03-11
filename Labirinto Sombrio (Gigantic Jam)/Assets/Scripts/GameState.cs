@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using Unity.Mathematics;
 
 public class GameState : MonoBehaviour
 {
@@ -21,18 +22,9 @@ public class GameState : MonoBehaviour
         set => GameStateInstance.isPlayerDead = value;
     }
     public static bool isGamePaused {get; set;} = false;
-    private bool godMode = false;
-    static public bool GodMode => GameStateInstance.godMode;
-    static public void ToogleGodMode()
-    {
-        GameStateInstance.godMode = !GodMode;
-        onToggleGodMode?.Invoke();
-    }
-    static public Action onToggleGodMode;
-    static public bool isOnCutscene;
-    static public bool skipCutscene;
     private MovimentoMouse movimentoMouse;
     static public MovimentoMouse MovimentoMouse { get => gameState.movimentoMouse; }
+    private Movimento movimento;
 
     private Camera mainCamera;
     static public Camera MainCamera { get => gameState.mainCamera; }
@@ -64,8 +56,15 @@ public class GameState : MonoBehaviour
     [HideInInspector] public static List<string> allPdasOnLevel = new List<string>();
     [HideInInspector] public static List<string> allPdasfound = new List<string>();
 
+    protected TorchLight torchLight;
+    public static bool IsTorchLit => gameState.torchLight.IsLit;
+    public static float SpeedPorcent => 
+    math.min(gameState.movimento.CurSpeed, gameState.movimento.CrouchSpeed / 2) / gameState.movimento.WalkSpeed;
+
     private void Awake()
     {
+        torchLight = GetComponentInChildren<TorchLight>(true);
+        movimento = GetComponentInChildren<Movimento>();
         mainCamera = Camera.main;
         movimentoMouse = GetComponentInChildren<MovimentoMouse>();
         //mainCanvas = gameObject.GetComponentInChildren<CanvasManager>();
@@ -107,15 +106,6 @@ public class GameState : MonoBehaviour
         AudioMixer.SetFloat("sfx", Mathf.Log10(sfx + 0.0001f) * 20);
     }
 
-    private void Update()
-    {
-        if(isOnCutscene && Input.GetButtonDown("Pause"))
-        {
-            StartCoroutine(EndCutsceneOnTime(0f));
-        }
-        else if(Input.GetButtonDown("Pause")) PauseGame(!isGamePaused);
-    }
-
     public static void RestartStage()
     {
         SaveData.jumpCutscene = false;
@@ -140,21 +130,6 @@ public class GameState : MonoBehaviour
         ob.StartCoroutine(ob.LoadSceneCourotine(waitTime, sceneName));
     }
 
-    public static void SetCutsceneCamera()
-    {
-        gameState.mainCamera.gameObject.SetActive(false);
-        gameState.cutsceneCamera?.gameObject.SetActive(true);
-        isOnCutscene = true;
-    }
-
-    public static void SetMainCamera()
-    {
-        Debug.Log("Set Main Camera");
-        gameState.cutsceneCamera?.gameObject.SetActive(false);
-        gameState.mainCamera.gameObject.SetActive(true);
-        isOnCutscene = false;
-    }
-
     public static void UpdateQuality()
     {
         if(QualitySettings.GetQualityLevel() != (int)SettingsData.quality)
@@ -168,16 +143,6 @@ public class GameState : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         SceneManager.LoadScene(sceneName);
-    }
-
-    IEnumerator EndCutsceneOnTime(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        Debug.Log("End Cutscene On Time");
-        SetMainCamera();
-        OnCutsceneEnd?.Invoke();
-        //mainCanvas.PauseGame();
-        yield return new WaitForSecondsRealtime(0.1f);
     }
 
     public static void InstantiateSound(Sound sound, Vector3 position, float destroyTime = 10f)
@@ -223,7 +188,6 @@ public class GameState : MonoBehaviour
 
     public static void EndLevel()
     {
-        if(!GodMode) ToogleGodMode();
         gameState.StartCoroutine(gameState.EndLevelCourotine());
     }
     IEnumerator EndLevelCourotine()

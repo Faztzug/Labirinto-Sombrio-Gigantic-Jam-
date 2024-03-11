@@ -18,15 +18,16 @@ public class EnemyIA : MonoBehaviour
     [SerializeField] protected float lowSpeed = 3f;
     [SerializeField] protected float walkingSpeed = 5f;
     [SerializeField] protected float runSpeed = 8f;
-    [SerializeField] protected float findPlayerDistance = 100f;
-    [SerializeField] protected float minPlayerDistance = 10f;
+    [SerializeField] private float baseFindPlayerDistance = 30f;
+    public float CurFindPlayerDistance => GetFindPlayerDistance();
+    [SerializeField] protected float minPlayerDistance = 2f;
     protected float distance => Vector3.Distance(player.position, this.transform.position);
     protected Animator anim;
 
     protected Vector3 targetPos;
     protected Transform newTargetTrans;
 
-    protected bool inWalkRange => distance <= findPlayerDistance && distance >= minPlayerDistance;
+    protected bool inWalkRange => distance <= CurFindPlayerDistance && distance >= minPlayerDistance;
     protected AudioSource audioSource;
 
     [SerializeField] private Color gizmoColor = new Color(0.7f, 0.75f, 0.2f, 0.2f);
@@ -73,6 +74,15 @@ public class EnemyIA : MonoBehaviour
     {
         
     }
+
+    protected float GetFindPlayerDistance()
+    {
+        var distance = baseFindPlayerDistance;
+        var litMod = GameState.IsTorchLit ? 2 : 0.5f;
+        distance *= litMod *= GameState.SpeedPorcent;
+        return distance;
+    }
+
     protected bool IsPlayerAlive()
     {
         if(player != null && player.gameObject.activeSelf && GameState.IsPlayerDead == false) return true;
@@ -111,7 +121,7 @@ public class EnemyIA : MonoBehaviour
     {
         if(agent.isOnNavMesh)
         {
-            if((ignoreFindDistance || distance < findPlayerDistance) && IsPlayerAlive()) //ignores min distance
+            if((ignoreFindDistance || distance < CurFindPlayerDistance) && IsPlayerAlive()) //ignores min distance
             {
                 var playerFlatPos = player.position;
                 playerFlatPos.y = transform.position.y;
@@ -138,7 +148,7 @@ public class EnemyIA : MonoBehaviour
     {
         if(agent.isOnNavMesh)
         {
-            if(distance > minPlayerDistance && distance < findPlayerDistance && IsPlayerAlive())
+            if(distance > minPlayerDistance && distance < CurFindPlayerDistance && IsPlayerAlive())
             {
                 var offset = goToOffset ? (player.rotation * playerOffsetGoTo) : Vector3.zero;
                 agent.SetDestination(player.position + offset);
@@ -182,6 +192,6 @@ public class EnemyIA : MonoBehaviour
     private void OnDrawGizmos() 
     {
         Gizmos.color = gizmoColor;
-        Gizmos.DrawWireSphere(transform.position, findPlayerDistance);
+        Gizmos.DrawWireSphere(transform.position, baseFindPlayerDistance);
     }
 }

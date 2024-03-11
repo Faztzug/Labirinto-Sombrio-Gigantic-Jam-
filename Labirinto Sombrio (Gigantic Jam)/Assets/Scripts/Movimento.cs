@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using DG.Tweening;
+using UnityEngine.UI;
+using Unity.Mathematics;
 
 public class Movimento : MonoBehaviour
 {
     [Header("Character Values")]
     [SerializeField] private float walkSpeed = 5f;
+    public float WalkSpeed => walkSpeed;
     [SerializeField] private float runSpeed = 10f;
     [SerializeField] private float runAccelaration = 3f;
     [SerializeField] private float inerciaDeccalaration = 5f;
+    [SerializeField] private float maxRunStamina = 10f;
+    private float runStamina;
+    [SerializeField] private GameObject staminaBarGO;
+    [SerializeField] private Image runStaminaFill;
     private float currentSpeed = 0f;
+    public float CurSpeed => currentSpeed;
     private Vector3 movementInput = Vector3.zero;
     private Vector3 lastMovementInput = Vector3.zero;
     private float lastInputSpeed = 0f;
@@ -41,6 +49,7 @@ public class Movimento : MonoBehaviour
 
     private bool isCrouching;
     [SerializeField] private float crouchingSpeed = 3f;
+    public float CrouchSpeed => crouchingSpeed;
     private float upwardsHeight;
     private Vector3 upwardsCenter;
     private Vector3 upwardsCamLocalPos;
@@ -183,8 +192,16 @@ public class Movimento : MonoBehaviour
         if(GameState.IsPlayerDead) movementInput = Vector3.zero;
 
         var hasMovingInput = (Vector3.Distance(movementInput, Vector3.zero) > 0.01);
-        var isRuning = Input.GetButton("Sprint");
+        var isRuning = Input.GetButton("Sprint") & runStamina > 0;
         anim.SetBool("isRuning", isRuning && hasMovingInput && !isCrouching);
+
+        if(currentSpeed > walkSpeed) runStamina -= Time.deltaTime;
+        else runStamina += Time.deltaTime * (2f - (CurSpeed / WalkSpeed));
+
+        if(runStamina > maxRunStamina) runStamina = maxRunStamina;
+
+        runStaminaFill.fillAmount = runStamina / maxRunStamina;
+        staminaBarGO.SetActive(!(runStamina == maxRunStamina));
 
         if((currentSpeed > crouchingSpeed & isCrouching) || !hasMovingInput)
         {
