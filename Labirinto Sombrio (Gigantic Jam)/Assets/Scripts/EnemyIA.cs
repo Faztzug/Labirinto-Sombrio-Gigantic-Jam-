@@ -24,15 +24,14 @@ public class EnemyIA : MonoBehaviour
     protected float distance => Vector3.Distance(player.position, this.transform.position);
     protected Animator anim;
 
-    protected Vector3 targetPos;
-    protected Transform newTargetTrans;
-
     protected bool inWalkRange => distance <= CurFindPlayerDistance && distance >= minPlayerDistance;
     protected AudioSource audioSource;
 
     [SerializeField] private Color gizmoColor = new Color(0.7f, 0.75f, 0.2f, 0.2f);
 
-    protected bool alive;
+    protected bool alive = true;
+
+    protected Vector3 lastKnownPosition;
 
     protected virtual void Start() 
     {
@@ -42,8 +41,6 @@ public class EnemyIA : MonoBehaviour
         rgbd.maxAngularVelocity = 0;
         anim = GetComponentInChildren<Animator>();
 
-        newTargetTrans = GameState.PlayerMiddleT;
-        targetPos = newTargetTrans.position;
         agent.speed = walkingSpeed;
         audioSource = GetComponentInChildren<AudioSource>();
         
@@ -53,6 +50,7 @@ public class EnemyIA : MonoBehaviour
     protected virtual void Update() 
     {
         if(!alive) StopMoving();
+        anim.SetFloat("speed", Agent.velocity.magnitude / runSpeed);
     }
 
     protected IEnumerator CourotineAsyncUpdateIA()
@@ -93,7 +91,6 @@ public class EnemyIA : MonoBehaviour
         StopMoving();
 
         if(anim == null) GameObject.Destroy(this.gameObject);
-        if(anim != null) anim.SetBool("Death", true);
         if(anim != null) anim.SetTrigger("death");
 
         if(agent.isOnNavMesh) agent.SetDestination(transform.position);
@@ -130,11 +127,12 @@ public class EnemyIA : MonoBehaviour
                 var thisPos = transform.position;
                 agent.isStopped = false;
                 var sucess = agent.SetDestination(player.position + directionPlayer * 0.5f);
+                lastKnownPosition = player.position + directionPlayer * 0.5f;
             }
             else 
             {
                 var pos = transform.position;
-                agent.SetDestination(pos);
+                agent.SetDestination(lastKnownPosition);
                 rgbd.velocity = Vector3.zero;
                 rgbd.angularVelocity = Vector3.zero;
             }
@@ -153,11 +151,12 @@ public class EnemyIA : MonoBehaviour
                 var offset = goToOffset ? (player.rotation * playerOffsetGoTo) : Vector3.zero;
                 agent.SetDestination(player.position + offset);
                 agent.isStopped = false;
+                lastKnownPosition = player.position + offset;
             }
             else 
             {
                 var pos = transform.position;
-                agent.SetDestination(pos);
+                agent.SetDestination(lastKnownPosition);
                 rgbd.velocity = Vector3.zero;
                 rgbd.angularVelocity = Vector3.zero;
             }

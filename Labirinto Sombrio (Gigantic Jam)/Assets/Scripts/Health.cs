@@ -121,6 +121,7 @@ public class Health : MonoBehaviour
         if (audioSource == null || anim == null || doesDestroyOnDeath)
         {
             GameState.InstantiateSound(deathSound, transform.position);
+            Destroy(this.gameObject, 0f);
         }
         else
         {
