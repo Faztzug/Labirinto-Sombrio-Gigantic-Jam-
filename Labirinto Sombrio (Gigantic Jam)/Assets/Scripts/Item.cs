@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IInteractable
 { 
     [SerializeField] [Range(0, 100)] protected int ammountPercent = 100;
     [SerializeField] protected Sound collectSound;
-    [SerializeField] protected string _interactText;
-    public virtual string InteractText => string.IsNullOrWhiteSpace(_interactText) | string.IsNullOrEmpty(_interactText) ? null : _interactText;
+    [SerializeField] protected string _interactText = "Interagir";
+    public virtual string InteractableText => string.IsNullOrWhiteSpace(_interactText) | string.IsNullOrEmpty(_interactText) ? null : _interactText;
 
     protected virtual void Start() { }
     protected virtual void OnTriggerEnter(Collider other)
@@ -24,7 +24,7 @@ public class Item : MonoBehaviour
         Debug.Log("Collectiing item: " + gameObject.name);
     }
 
-    public virtual void InteractingWithItem()
+    public virtual void Interact()
     {
         CollectItem(GameState.PlayerTransform.gameObject);
     }

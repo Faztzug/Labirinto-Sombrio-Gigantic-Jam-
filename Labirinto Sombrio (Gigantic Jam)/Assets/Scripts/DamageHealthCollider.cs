@@ -36,13 +36,20 @@ public class DamageHealthCollider : MonoBehaviour
 
     protected Health GetHealth(Collider other)
     {
-        if(other.attachedRigidbody != null) return GetHealth(other.attachedRigidbody.gameObject);
-        else return GetHealth(other.gameObject);
+        Health h;
+        if(other.attachedRigidbody != null) h = GetHealth(other.attachedRigidbody.gameObject);
+        else h = GetHealth(other.gameObject);
+        if(h) h.BleedVFX(other.ClosestPointOnBounds(transform.position), this.transform);
+        return h;
+        
     } 
     protected Health GetHealth(Collision other)
     {
-        if(other.rigidbody != null) return GetHealth(other.rigidbody.gameObject);
-        else return GetHealth(other.gameObject);
+        Health h;
+        if(other.rigidbody != null) h = GetHealth(other.rigidbody.gameObject);
+        else h = GetHealth(other.gameObject);
+        if(h) h.BleedVFX(other.contacts[0].point, this.transform);
+        return h;
     } 
 
     protected void DealDamage(Health h)

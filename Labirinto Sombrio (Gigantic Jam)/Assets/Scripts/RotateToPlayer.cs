@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotateToPlayer : MonoBehaviour
 {
-    private Transform player => GameState.PlayerTransform;
+    private Transform player => GameState.PlayerMiddleT;
     [SerializeField] private bool flatYRotantion = true;
     [SerializeField] private float lerpSpeed;
     [SerializeField] private int distanceToRotate = 30;
