@@ -32,9 +32,16 @@ public class EnemyIA : MonoBehaviour
     protected bool alive = true;
 
     protected Vector3 lastKnownPosition;
+    protected Health health;
+    [SerializeField] protected GameObject[] itensDrop;
 
     protected virtual void Start() 
     {
+        foreach (var item in itensDrop)
+        {
+            item.SetActive(false);
+        }
+        health = GetComponentInChildren<Health>();
         updateRate = Random.Range(updateRateRNG[0], updateRateRNG[1]);
         agent = GetComponent<NavMeshAgent>();
         rgbd = GetComponent<Rigidbody>();
@@ -50,7 +57,7 @@ public class EnemyIA : MonoBehaviour
     protected virtual void Update() 
     {
         if(!alive) StopMoving();
-        anim.SetFloat("speed", Agent.velocity.magnitude / runSpeed);
+        anim?.SetFloat("speed", Agent.velocity.magnitude / runSpeed);
     }
 
     protected IEnumerator CourotineAsyncUpdateIA()
@@ -89,6 +96,12 @@ public class EnemyIA : MonoBehaviour
     public virtual void EnemyDeath()
     {
         StopMoving();
+
+        foreach (var item in itensDrop)
+        {
+            item.SetActive(true);
+            item.transform.parent = null;
+        }
 
         if(anim == null) GameObject.Destroy(this.gameObject);
         if(anim != null) anim.SetTrigger("death");

@@ -30,6 +30,7 @@ public class TorchLight : MonoBehaviour
     [SerializeField] protected MeshRenderer[] emissionMeshs;
     protected List<Material> emissionMaterials = new List<Material>();
     protected Color[] materialsIntensities;
+    [SerializeField] protected GameObject[] toggleByLit; 
 
     private void Start()
     {
@@ -43,6 +44,7 @@ public class TorchLight : MonoBehaviour
         lightsIntensities = lightsSources.Select(l => l.intensity).ToArray();
         materialsIntensities = emissionMaterials.Select(m => m.GetColor("_EmissionColor")).ToArray();
         GetComponentInChildren<DamageHealthCollider>(true).OnDealtDamage.AddListener(ApplyMeeleBatteryCost);
+        foreach (var go in toggleByLit) go.SetActive(isLit);
     }
 
     protected void OnDestroy()
@@ -83,25 +85,26 @@ public class TorchLight : MonoBehaviour
     protected void SetLit()
     {
         foreach (var t in tweens) t.Kill();
-            for (int i = 0; i < lightsSources.Length; i++)
-            {
-                var intensity = isLit ? lightsIntensities[i] : 0f;
-                tweens.Add(lightsSources[i].DOIntensity(intensity, tweenDurantion).SetEase(Ease.OutSine));
-            }
-            for (int i = 0; i < emissionMaterials.Count; i++)
-            {
-                var c = materialsIntensities[i];
-                var intensity = isLit ? c : new Color(c.r, c.g, c.b) / 64f;
-                var curMat = emissionMaterials[i];
+        for (int i = 0; i < lightsSources.Length; i++)
+        {
+            var intensity = isLit ? lightsIntensities[i] : 0f;
+            tweens.Add(lightsSources[i].DOIntensity(intensity, tweenDurantion).SetEase(Ease.OutSine));
+        }
+        for (int i = 0; i < emissionMaterials.Count; i++)
+        {
+            var c = materialsIntensities[i];
+            var intensity = isLit ? c : new Color(c.r, c.g, c.b) / 64f;
+            var curMat = emissionMaterials[i];
 
-                if (isLit)
-                {
-                    curMat.EnableKeyword("_EMISSION");
-                    curMat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
-                }
-
-                tweens.Add(curMat.DOColor(intensity, "_EmissionColor", tweenDurantion).SetEase(Ease.OutSine)
-                .OnComplete(() => DisablingEmission(curMat)));
+            if (isLit)
+            {
+                curMat.EnableKeyword("_EMISSION");
+                curMat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
             }
+
+            tweens.Add(curMat.DOColor(intensity, "_EmissionColor", tweenDurantion).SetEase(Ease.OutSine)
+            .OnComplete(() => DisablingEmission(curMat)));
+        }
+        foreach (var go in toggleByLit) go.SetActive(isLit);
     }
 }

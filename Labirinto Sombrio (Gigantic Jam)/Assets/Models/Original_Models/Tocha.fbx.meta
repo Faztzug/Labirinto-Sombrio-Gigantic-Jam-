@@ -3,7 +3,27 @@ guid: ba23e718d55e73f4cbf217791bdd56c9
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 7c34e491af7ff3048bba04657adf7d69, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stone_Material
+    second: {fileID: 2100000, guid: 7b2af58e33c7e2445b8831f19b85d3a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood_Material.001
+    second: {fileID: 2100000, guid: 57630c479761a9e4e8a4621daa718f15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood_Material.002
+    second: {fileID: 2100000, guid: e22d8fce53245fc4592b660065c4d49c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0005
+    globalScale: 0.05
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

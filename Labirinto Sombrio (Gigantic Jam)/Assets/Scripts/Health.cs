@@ -16,7 +16,6 @@ public class Health : MonoBehaviour
     [HideInInspector] public bool isDead = false;
     protected Animator anim;
     protected EnemyIA thisEnemy;
-    public Action onDeath;
     [SerializeField] private GameObject bloodVFX;
     [SerializeField] private GameObject DeathVFX;
     public Sound[] damageSounds;
@@ -31,6 +30,9 @@ public class Health : MonoBehaviour
     public UnityEvent OnDeath;
     public UnityEvent OnDamage;
     public const float kEasyHealthPctg = 0.8f;
+    protected Transform lastDamageTransform = null;
+    public Transform AssailantTrans => lastDamageTransform;
+
 
     public virtual void Start()
     {
@@ -89,7 +91,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public virtual void BleedVFX(Vector3 position)
+    public virtual void BleedVFX(Vector3 position, Transform assailant)
     {
         if(bloodVFX != null) 
         {
@@ -97,6 +99,7 @@ public class Health : MonoBehaviour
             if(this.gameObject.GetComponentInChildren<Animator>() != null) go.transform.parent = this.transform;
             GameObject.Destroy(go, 3f);
         }
+        lastDamageTransform = assailant;
     }
 
     public virtual void DestroyCharacter()
