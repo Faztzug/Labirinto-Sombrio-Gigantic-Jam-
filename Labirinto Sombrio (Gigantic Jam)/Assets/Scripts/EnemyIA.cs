@@ -37,6 +37,7 @@ public class EnemyIA : MonoBehaviour
 
     protected virtual void Start() 
     {
+        lastKnownPosition = transform.position;
         foreach (var item in itensDrop)
         {
             item.SetActive(false);

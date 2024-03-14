@@ -40,30 +40,10 @@ public class MovimentoMouse : MonoBehaviour
         camRotationY += mouseY;
         camRotationY = Mathf.Clamp(camRotationY, maxXRotation.x, maxXRotation.y);
 
-        //cam.localRotation = Quaternion.Euler(camRotationY, 0f, 0f);
-        //cam.Rotate(Vector3.up * mouseX);
         playerHead.localRotation = Quaternion.Euler(camRotationY, 0f,0f);
         playerBody.Rotate(Vector3.up * mouseX);
 
         GetTargetHealth();
-
-        if(Input.GetButtonDown("Use") && isOnInteractableDistance && !GameState.isGamePaused)
-        {
-            var layer = ItemLayers();
-            RaycastHit rayHit;
-            if(Physics.Raycast(cam.transform.position, cam.transform.forward, out rayHit, kHorizonPoint, layer))
-            {
-                raycastResult = rayHit.point;
-                var curTransform = rayHit.transform;
-                var itemObj = curTransform.GetComponentInChildren<Item>();
-                while (itemObj == null && curTransform.parent != null)
-                {
-                    curTransform = curTransform.parent;
-                    itemObj = curTransform.GetComponent<Item>();
-                }
-                itemObj?.InteractingWithItem();
-            }
-        }
 
         SwayWeapons();
     }
