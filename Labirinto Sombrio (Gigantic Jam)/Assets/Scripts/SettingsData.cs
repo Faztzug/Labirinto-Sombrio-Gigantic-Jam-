@@ -33,7 +33,7 @@ public class SettingsData
         musicVolume = 0.8f;
         sfxVolume = 0.8f;
         quality = Quality.High;
-        FPS = 60;
+        FPS = 200;
         showFPS = false;
         sensibilidadeX = 0.5f;
         sensibilidadeY = 0.5f;

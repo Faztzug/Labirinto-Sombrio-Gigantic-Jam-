@@ -34,8 +34,10 @@ public class InteractableDialogue : MonoBehaviour, IInteractable
 
     protected void CheckPlayerIsAssailant()
     {
-        if(thisHealth.AssailantTrans == GameState.PlayerTransform) 
+        Debug.Log("Assailant layer is: " + LayerMask.LayerToName(thisHealth.AssailantTrans.gameObject.layer));
+        if(thisHealth.AssailantTrans.gameObject.layer == LayerMask.NameToLayer("Player")) 
         {
+            Debug.Log("Disabling Interaction due Player Violence!");
             dialogueTmp.gameObject.SetActive(false);
             this.enabled = false;
         }

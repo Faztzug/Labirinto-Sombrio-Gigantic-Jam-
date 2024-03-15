@@ -23,14 +23,18 @@ public class InteractionRaycast : MonoBehaviour
         if(GameState.isGamePaused) return;
         RaycastHit rayHit;
         IInteractable item = null;
-        if(Physics.SphereCast(camTrans.position, 0.1f, camTrans.forward, out rayHit, range, ~(LayerMask.GetMask("Player")), QueryTriggerInteraction.UseGlobal))
+        if(Physics.SphereCast(camTrans.position, 0.2f, camTrans.forward, out rayHit, range, ~(LayerMask.GetMask("Player")), QueryTriggerInteraction.UseGlobal))
         {
-            if(rayHit.rigidbody != null) item = rayHit.rigidbody.gameObject.GetComponentInChildren<IInteractable>();
-            else item = rayHit.collider.GetComponentInChildren<IInteractable>();
+            if(rayHit.rigidbody != null) item = rayHit.rigidbody.gameObject.GetComponentInChildren<IInteractable>(false);
+            else item = rayHit.collider.GetComponentInChildren<IInteractable>(false);
             if(item != null) 
             {
-                canvasInteractor.text = interectButton + item.InteractableText;
-                if(Input.GetButtonDown("Use")) item.Interact(); 
+                if((item as MonoBehaviour).isActiveAndEnabled)
+                {
+                    canvasInteractor.text = interectButton + item.InteractableText;
+                    if(Input.GetButtonDown("Use")) item.Interact(); 
+                }
+                else item = null;
             }
         }
         canvasInteractor.gameObject.SetActive(item != null);

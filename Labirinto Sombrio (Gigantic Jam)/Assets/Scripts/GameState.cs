@@ -10,7 +10,7 @@ using Unity.Mathematics;
 
 public class GameState : MonoBehaviour
 {
-    //static public CanvasManager mainCanvas;
+    static public CanvasManager mainCanvas => CanvasManager.CanvasManagerInstance;
 
     public Transform playerTransform;
     public Transform playerMiddleT;
@@ -29,10 +29,9 @@ public class GameState : MonoBehaviour
     private Camera mainCamera;
     static public Camera MainCamera { get => gameState.mainCamera; }
     private Camera cutsceneCamera;
-    private static GameState gameState;
     [SerializeField] private GameObject GenericAudioSourcePrefab;
+    private static GameState gameState;
     private GameState() { }
-
     public static GameState GameStateInstance => gameState;
 
     public SaveData saveData;
@@ -92,6 +91,7 @@ public class GameState : MonoBehaviour
     {
         Debug.Log("RELOADING SETTINGS");
         SettingsData = settingsManager.LoadSettings();
+        Application.targetFrameRate = GameState.SettingsData.FPS;
     }
     private void OnDestroy() 
     {
@@ -104,6 +104,11 @@ public class GameState : MonoBehaviour
         var sfx = settingsData.mute ? 0 : SettingsData.sfxVolume;
         AudioMixer.SetFloat("music", Mathf.Log10(music + 0.0001f) * 20);
         AudioMixer.SetFloat("sfx", Mathf.Log10(sfx + 0.0001f) * 20);
+    }
+
+    private void Update() 
+    {
+        if(Input.GetButtonDown("Pause")) PauseGame(!isGamePaused);
     }
 
     public static void RestartStage()
@@ -155,7 +160,7 @@ public class GameState : MonoBehaviour
 
     public static void PauseGame(bool pause)
     {
-        /*if(mainCanvas == null)
+        /* if(mainCanvas == null)
         {
             Debug.Log("On main menu Pause Action");
             var mainMenu = FindFirstObjectByType<MenuController>(FindObjectsInactive.Include);
@@ -167,14 +172,13 @@ public class GameState : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             isGamePaused = false;
             return;
-        }*/
+        } */
 
-        /*if(isGamePaused && mainCanvas != null && !mainCanvas.DoesExitPause())
+        if(isGamePaused && mainCanvas != null && !mainCanvas.DoesExitPause())
         {
             Debug.Log("should exit pause? " + mainCanvas.DoesExitPause());
             mainCanvas.SetSettingsMenu(false);
             mainCanvas.SetTutorial(false);
-            mainCanvas.SetPDAdocument(false);
             mainCanvas.SetPauseMenu(true);
             Cursor.lockState = isGamePaused ? CursorLockMode.None : CursorLockMode.Locked;
             return;
@@ -183,7 +187,6 @@ public class GameState : MonoBehaviour
         Cursor.lockState = isGamePaused ? CursorLockMode.None : CursorLockMode.Locked;
         Time.timeScale = pause ? 0f : 1f;
         mainCanvas?.SetPauseMenu(pause);
-        mainCanvas?.SetPDAdocument(false);*/
     }
 
     public static void EndLevel()
