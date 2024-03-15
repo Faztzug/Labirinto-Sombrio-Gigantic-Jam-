@@ -56,7 +56,7 @@ public class Health : MonoBehaviour
 
         if(value < 0)
         {
-            if(anim != null) anim.SetTrigger("Damage");
+            if(anim != null) anim.SetTrigger("damage");
             OnDamage?.Invoke();
         }
 

@@ -219,7 +219,7 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     audioSource: {fileID: 0}
-  _interactText: 
+  _interactText: Se Armar
 --- !u!114 &2966642797647125983
 MonoBehaviour:
   m_ObjectHideFlags: 0

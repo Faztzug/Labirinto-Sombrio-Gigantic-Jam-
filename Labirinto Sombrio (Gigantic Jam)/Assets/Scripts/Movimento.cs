@@ -172,12 +172,10 @@ public class Movimento : MonoBehaviour
 
         if(ungroudedTime < 0.1f && !GameState.IsPlayerDead)
         {
-            anim.SetBool("isJumping", false);
-
             if (Input.GetButtonDown("Jump"))
             {
                 gravityAcceleration = jumpForce;
-                anim.SetBool("isJumping", true);
+                anim.SetTrigger("jump");
                 jumpSound.PlayOn(audioSource);
             }
         }
@@ -248,6 +246,8 @@ public class Movimento : MonoBehaviour
         anim.SetFloat("Movement", velocitylAbs);
 
         anim.SetFloat("Velocidade", Mathf.Abs((vertical.magnitude * currentSpeed) / runSpeed));
+
+        anim.SetFloat("speed", currentSpeed / runSpeed);
 
         if(Input.GetAxis("Horizontal") >= 0) anim.SetFloat("Strafe", (horizontal.magnitude * currentSpeed) / runSpeed);
         else if(Input.GetAxis("Horizontal") < 0) anim.SetFloat("Strafe", (-horizontal.magnitude * currentSpeed) / runSpeed);
