@@ -76,5 +76,5 @@ public class CanvasManager : MonoBehaviour
     }
 
     public void ResumeGame() => GameState.PauseGame(false);
-    public void QuitGame() => GameState.LoadScene("Menu");
+    public void QuitGame() => Application.Quit();
 }
