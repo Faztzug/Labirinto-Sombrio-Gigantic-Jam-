@@ -16,8 +16,8 @@ public interface IInteractable
 public class InteractableDialogue : MonoBehaviour, IInteractable
 {
     [SerializeField] protected string interactableText = "Interagir";
-    [SerializeField] [TextArea(1,3)] protected string[] dialogueTexts;
     public string InteractableText => interactableText;
+    [SerializeField] [TextArea(1,3)] protected string[] dialogueTexts;
     [SerializeField] protected TextMeshPro dialogueTmp;
     protected string curString = "";
     protected int curI = 0;

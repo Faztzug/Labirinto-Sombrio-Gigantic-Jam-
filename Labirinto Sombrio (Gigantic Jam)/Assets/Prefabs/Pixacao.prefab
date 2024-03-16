@@ -142,7 +142,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4532360621148957074, guid: e1e8e9c9965fd2c49bcb8342f9410b0d, type: 2}
+  - {fileID: -4043633542797419723, guid: 03bb8032d853f6b418c50845dfbcf490, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -184,10 +184,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sample text
+  m_text: "PIXA\xC7~\xC3O"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e1e8e9c9965fd2c49bcb8342f9410b0d, type: 2}
-  m_sharedMaterial: {fileID: -4532360621148957074, guid: e1e8e9c9965fd2c49bcb8342f9410b0d,
+  m_fontAsset: {fileID: 11400000, guid: 03bb8032d853f6b418c50845dfbcf490, type: 2}
+  m_sharedMaterial: {fileID: -4043633542797419723, guid: 03bb8032d853f6b418c50845dfbcf490,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -212,8 +212,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

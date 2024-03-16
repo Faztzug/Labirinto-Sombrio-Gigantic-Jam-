@@ -41,6 +41,7 @@ public class SoulAI : EnemyIA
     protected override void Update()
     {
         base.Update();
+        if(health.AssailantTrans == null) return;
         if(agent.velocity.magnitude > agent.speed 
         & Vector3.Distance(transform.position, health.AssailantTrans.position) > 19) 
         {

@@ -13,7 +13,13 @@ public class DemonIA : EnemyIA
 
         var wasSeeing = seeingPlayer;
         GoToPlayerOffset();
-        if(!wasSeeing & seeingPlayer) foundSound?.PlayOn(audioSource);
+        if(!wasSeeing & seeingPlayer) GameState.InstantiateSound(foundSound, transform.position);
+
+        if(distance <= meeleDistance) 
+        {
+            var r= Random.Range(0, meeleGrunt.Length);
+            meeleGrunt[r]?.PlayOn(audioSource);
+        }
     }
 
     protected override void Update()
@@ -22,8 +28,6 @@ public class DemonIA : EnemyIA
         if(distance <= meeleDistance) 
         {
             anim.SetTrigger("meele");
-            var r= Random.Range(0, meeleGrunt.Length);
-            meeleGrunt[r]?.PlayOn(audioSource);
         }
     }
 }
