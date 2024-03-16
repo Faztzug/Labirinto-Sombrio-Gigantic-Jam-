@@ -45,7 +45,7 @@ public class DamageHealthCollider : MonoBehaviour
 
     protected void PlaySound()
     {
-        if(hitSound == null) return;
+        if(hitSound == null & audioSource != null) return;
         if(!hitSound.IsPlaying) hitSound?.PlayOn(audioSource, false);
     }
 
