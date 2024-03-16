@@ -84,8 +84,8 @@ public class EnemyIA : MonoBehaviour
     protected float GetFindPlayerDistance()
     {
         var distance = baseFindPlayerDistance;
-        var litMod = GameState.IsTorchLit ? 2 : 0.5f;
-        distance *= litMod *= GameState.SpeedPorcent;
+        var litMod = GameState.IsTorchLit ? 1.5f : 0.5f;
+        distance *= litMod * GameState.SpeedPorcent;
         return distance;
     }
 
@@ -156,6 +156,8 @@ public class EnemyIA : MonoBehaviour
             Debug.LogError(gameObject.name + " OUT OF NAV MESH!");
         }
     }
+
+    protected bool seeingPlayer;
     protected void GoToPlayerOffset(bool goToOffset = true)
     {
         if(agent.isOnNavMesh)
@@ -166,6 +168,7 @@ public class EnemyIA : MonoBehaviour
                 agent.SetDestination(player.position + offset);
                 agent.isStopped = false;
                 lastKnownPosition = player.position + offset;
+                seeingPlayer = true;
             }
             else 
             {
@@ -173,6 +176,7 @@ public class EnemyIA : MonoBehaviour
                 agent.SetDestination(lastKnownPosition);
                 rgbd.velocity = Vector3.zero;
                 rgbd.angularVelocity = Vector3.zero;
+                seeingPlayer = false;
             }
         }
         else

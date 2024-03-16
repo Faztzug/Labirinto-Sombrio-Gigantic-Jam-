@@ -24,12 +24,15 @@ public class InteractableDialogue : MonoBehaviour, IInteractable
     protected float subsSpeed => Random.Range(8f, 20f);
     protected Tween subTween;
     protected Health thisHealth;
+    [SerializeField] protected Sound speakSound;
+    protected AudioSource audioSource;
 
     void Start()
     {
         dialogueTmp.text = "";
         thisHealth = GetComponentInChildren<Health>();
         thisHealth.OnDamage.AddListener(CheckPlayerIsAssailant);
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     protected void CheckPlayerIsAssailant()
@@ -63,6 +66,7 @@ public class InteractableDialogue : MonoBehaviour, IInteractable
 
         curI++;
         curI %= dialogueTexts.Length;
+        speakSound?.PlayOn(audioSource);
     }
 
     protected float textTimer = 10f;

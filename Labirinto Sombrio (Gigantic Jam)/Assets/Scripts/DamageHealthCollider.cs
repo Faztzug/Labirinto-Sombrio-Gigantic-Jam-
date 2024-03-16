@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class DamageHealthCollider : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class DamageHealthCollider : MonoBehaviour
     [SerializeField] protected bool damageOnTrigger;
     [SerializeField] protected bool damageOnCollision = true;
     public UnityEvent OnDealtDamage = new UnityEvent();
+    [SerializeField] protected Sound hitSound;
+    protected AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponentInChildren<AudioSource>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -26,12 +34,19 @@ public class DamageHealthCollider : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+        PlaySound();
         Debug.Log("collision betwwen " + gameObject.name + other.gameObject.name);
         if(!damageOnCollision) return;
         else 
         {
             DealDamage(GetHealth(other));
         }
+    }
+
+    protected void PlaySound()
+    {
+        if(hitSound == null) return;
+        if(hitSound.IsPlaying) hitSound?.PlayOn(audioSource, false);
     }
 
     protected Health GetHealth(Collider other)
@@ -58,6 +73,7 @@ public class DamageHealthCollider : MonoBehaviour
         Debug.Log("DealingDamage! to: " + h.gameObject.name);
         h.UpdateHealth(Damage);
         OnDealtDamage?.Invoke();
+        PlaySound();
     }
 
     protected Health GetHealth(GameObject go)

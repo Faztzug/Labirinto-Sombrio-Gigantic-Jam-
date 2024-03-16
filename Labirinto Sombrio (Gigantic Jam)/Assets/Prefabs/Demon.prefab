@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1550159012827366344}
   - component: {fileID: 1550159012827366345}
   - component: {fileID: 1463736268844097870}
+  - component: {fileID: 398200726367678426}
   m_Layer: 6
   m_Name: Demon
   m_TagString: Enemy
@@ -53,11 +54,41 @@ MonoBehaviour:
   isDead: 0
   bloodVFX: {fileID: 0}
   DeathVFX: {fileID: 0}
-  damageSounds: []
+  damageSounds:
+  - clip: {fileID: 8300000, guid: 68c1dfa57134b724a92ed2d449afe24d, type: 3}
+    name: hit
+    volume: 1
+    pitch: 1
+    pitchRNG:
+    - -0.27
+    - 0.34
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 14bb06073e397014880f361f86319adc, type: 3}
+    name: hit
+    volume: 1
+    pitch: 1
+    pitchRNG:
+    - -0.27
+    - 0.34
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: df8ccc38d89c4b94abc5e44863d8c28a, type: 3}
+    name: hit
+    volume: 1
+    pitch: 1
+    pitchRNG:
+    - -0.27
+    - 0.34
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
   extraDamageSounds: []
   headshootSounds: []
   deathSound:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 33a87fbe5c433594ba6b19d579214591, type: 3}
     name: 
     volume: 1
     pitch: 1
@@ -138,6 +169,164 @@ MonoBehaviour:
   itensDrop:
   - {fileID: 1537287074297229695}
   meeleDistance: 3
+  meeleGrunt:
+  - clip: {fileID: 8300000, guid: 5b8860586496769458dee7ae2ec82e5b, type: 3}
+    name: hit
+    volume: 0.232
+    pitch: 1
+    pitchRNG:
+    - -0.27
+    - 0.34
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: d6e5eac71f1a0c54f91d854ee7df3e29, type: 3}
+    name: hit
+    volume: 0.266
+    pitch: 1
+    pitchRNG:
+    - -0.27
+    - 0.34
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 3ee366d0d653d53438c3308a23db59ac, type: 3}
+    name: hit
+    volume: 0.279
+    pitch: 1
+    pitchRNG:
+    - -0.27
+    - 0.34
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 98a09bdc4138abb41949d2559e3a3e8d, type: 3}
+    name: hit
+    volume: 0.286
+    pitch: 1
+    pitchRNG:
+    - -0.27
+    - 0.34
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 312ac623990f7b34a8c0ba38ae1accda, type: 3}
+    name: hit
+    volume: 0.347
+    pitch: 1
+    pitchRNG:
+    - -0.27
+    - 0.34
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
+  foundSound:
+    clip: {fileID: 8300000, guid: 1689058eeeb072842b8c76940508c2a7, type: 3}
+    name: foundyou
+    volume: 1
+    pitch: 1
+    pitchRNG:
+    - -0.35
+    - 0.38
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
+--- !u!82 &398200726367678426
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550159012827366351}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 5
+  MaxDistance: 200
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1550159013365441559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -754,6 +943,17 @@ MonoBehaviour:
   OnDealtDamage:
     m_PersistentCalls:
       m_Calls: []
+  hitSound:
+    clip: {fileID: 0}
+    name: 
+    volume: 1
+    pitch: 1
+    pitchRNG:
+    - 0
+    - 0
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
 --- !u!1 &1550159013365539495 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100016, guid: aa723b44260e74040869a722c46a85c5,
@@ -830,6 +1030,17 @@ MonoBehaviour:
   OnDealtDamage:
     m_PersistentCalls:
       m_Calls: []
+  hitSound:
+    clip: {fileID: 0}
+    name: 
+    volume: 1
+    pitch: 1
+    pitchRNG:
+    - 0
+    - 0
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
 --- !u!1 &1550159013365539581 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100074, guid: aa723b44260e74040869a722c46a85c5,
@@ -867,6 +1078,17 @@ MonoBehaviour:
   OnDealtDamage:
     m_PersistentCalls:
       m_Calls: []
+  hitSound:
+    clip: {fileID: 0}
+    name: 
+    volume: 1
+    pitch: 1
+    pitchRNG:
+    - 0
+    - 0
+    loop: 0
+    playOnAwake: 0
+    audioSource: {fileID: 0}
 --- !u!1 &1550159013365539613 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100106, guid: aa723b44260e74040869a722c46a85c5,
