@@ -33,7 +33,7 @@ public class SoulAI : EnemyIA
         flatPos.y = 0;
         assailantPos.y = 0;
         var runDir = flatPos - assailantPos;
-        agent.SetDestination(flatPos + runDir * 20f);
+        agent?.SetDestination(flatPos + runDir * 20f);
         //Debug.Log("Running away! TO: " + (flatPos + runDir * 50f).ToString());
         agent.speed = runSpeed;
     }
