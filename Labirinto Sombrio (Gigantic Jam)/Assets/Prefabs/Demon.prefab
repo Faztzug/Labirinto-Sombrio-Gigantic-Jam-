@@ -165,7 +165,7 @@ MonoBehaviour:
   runSpeed: 8
   baseFindPlayerDistance: 30
   minPlayerDistance: 1
-  gizmoColor: {r: 0.7490196, g: 0.21031967, b: 0.2, a: 0.2}
+  gizmoColor: {r: 0.7490196, g: 0.21031967, b: 0.2, a: 0.105882354}
   itensDrop:
   - {fileID: 1537287074297229695}
   meeleDistance: 3
