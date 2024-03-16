@@ -3087,7 +3087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64a7c21be530bec4fac7b3fd84b39004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 50
   isDead: 0
   bloodVFX: {fileID: 0}
   DeathVFX: {fileID: 8525803308455919980, guid: 96905eae871d71f4792ccd6e937d50c9,
@@ -8959,7 +8959,7 @@ PrefabInstance:
     - target: {fileID: 3534867378343004009, guid: df9737a508d1af445a80b2974c5937e7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3534867378343004009, guid: df9737a508d1af445a80b2974c5937e7,
         type: 3}

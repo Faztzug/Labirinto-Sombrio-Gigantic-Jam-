@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4526e23ae2d8b9438c6a6ae31ec058d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 14
   isDead: 0
   bloodVFX: {fileID: 0}
   DeathVFX: {fileID: 0}
