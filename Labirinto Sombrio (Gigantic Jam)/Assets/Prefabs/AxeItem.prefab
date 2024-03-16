@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e310463928497840a7b0ebeaaa33adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 0.501
+  chance: 0.75
 --- !u!82 &6191182461672558380
 AudioSource:
   m_ObjectHideFlags: 0
