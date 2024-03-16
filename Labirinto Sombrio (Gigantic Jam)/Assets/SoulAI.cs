@@ -27,7 +27,7 @@ public class SoulAI : EnemyIA
 
     public void RunAway()
     {
-        if(!agent) return;
+        if(!agent || !this) return;
         var assailantPos = health.AssailantTrans.position;
         var flatPos = transform.position;
         flatPos.y = 0;
