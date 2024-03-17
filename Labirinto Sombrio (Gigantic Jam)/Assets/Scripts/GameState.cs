@@ -189,24 +189,24 @@ public class GameState : MonoBehaviour
         mainCanvas?.SetPauseMenu(pause);
     }
 
-    public static void EndLevel()
-    {
-        gameState.StartCoroutine(gameState.EndLevelCourotine());
-    }
-    IEnumerator EndLevelCourotine()
-    {
-        var totalTime = DateTime.Now - levelStartTime;
-        var go = GameObject.Instantiate(endCanvas,null);
-        go.SetActive(true);
+    // public static void EndLevel()
+    // {
+    //     gameState.StartCoroutine(gameState.EndLevelCourotine());
+    // }
+    // IEnumerator EndLevelCourotine()
+    // {
+    //     var totalTime = DateTime.Now - levelStartTime;
+    //     var go = GameObject.Instantiate(endCanvas,null);
+    //     go.SetActive(true);
 
-        yield return new WaitForSecondsRealtime(10f);
-        var nextSceneI = this.gameObject.scene.buildIndex + 1;
-        if (nextSceneI >= SceneManager.sceneCountInBuildSettings) nextSceneI = 0;
+    //     yield return new WaitForSecondsRealtime(10f);
+    //     var nextSceneI = this.gameObject.scene.buildIndex + 1;
+    //     if (nextSceneI >= SceneManager.sceneCountInBuildSettings) nextSceneI = 0;
 
 
-        string scenePath = SceneUtility.GetScenePathByBuildIndex(nextSceneI);
-        string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+    //     string scenePath = SceneUtility.GetScenePathByBuildIndex(nextSceneI);
+    //     string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
 
-        GameState.LoadScene(sceneName);
-    }
+    //     GameState.LoadScene(sceneName);
+    // }
 }

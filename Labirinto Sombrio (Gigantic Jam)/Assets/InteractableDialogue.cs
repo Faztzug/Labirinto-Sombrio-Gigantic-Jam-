@@ -4,8 +4,6 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
-using Unity.VisualScripting.Dependencies.Sqlite;
-using Unity.VisualScripting;
 
 public interface IInteractable
 {
